@@ -2,7 +2,5 @@
 
 set -ev
 
-bundle install
-
 cd test
 rake
