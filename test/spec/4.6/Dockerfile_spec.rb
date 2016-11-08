@@ -12,7 +12,7 @@ describe "#{tag}" do
     create_image(tag)
   end
 
-  test_node("6.3.0")
+  test_node("4.6.1")
 
   test_npm
 
