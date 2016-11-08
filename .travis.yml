@@ -1,0 +1,12 @@
+language: ruby
+
+sudo: required
+
+services:
+  - docker
+
+install:
+  - bundle install
+  
+script:
+  - ./run-tests.sh
