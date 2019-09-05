@@ -1,9 +1,6 @@
 name: Serverspec
 
-on:
-  pull_request:
-    branches:    
-      - master 
+on: push
 
 jobs:
   build:
