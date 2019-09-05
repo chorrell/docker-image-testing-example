@@ -25,7 +25,8 @@ jobs:
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
         sudo apt-get -y update
         sudo apt-get install docker-ce
+        sudo systemctl status docker
     - name: Run test
       run: |
         cd test
-        rake
+        sudo rake
