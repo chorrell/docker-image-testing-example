@@ -1,7 +1,6 @@
 name: Serverspec
 
-on:
-  [push, pull_request]:
+on: [push, pull_request]:
     branches:
     - master
 
