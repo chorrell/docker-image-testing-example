@@ -9,13 +9,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Ruby 2.6
+    - name: Set up Ruby 2.3
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.3.x
-    - name: Test with Serverspec
+    - name: Install Serverspec
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+    - name: Install Docker
+      run: |
+        apt-get -y update
+        apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+        apt-get -y update
+        apt install docker-ce
+    - name: Run test
+      run: |
         cd test
         rake
