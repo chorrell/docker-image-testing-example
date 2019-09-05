@@ -20,16 +20,6 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
-    - name: Install Docker
-      run: |
-        sudo apt-get -y update
-        sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-        sudo apt-get -y update
-        sudo apt-get install docker-ce
-        sudo systemctl status docker
-        sudo usermod -aG docker ${USER}
     - name: Run test
       run: |
         cd test
