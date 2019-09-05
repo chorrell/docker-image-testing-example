@@ -26,7 +26,8 @@ jobs:
         sudo apt-get -y update
         sudo apt-get install docker-ce
         sudo systemctl status docker
+        sudo usermod -aG docker ${USER}
     - name: Run test
       run: |
         cd test
-        sudo rake
+        rake
