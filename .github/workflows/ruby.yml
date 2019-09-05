@@ -1,4 +1,4 @@
-name: Ruby
+name: Serverspec
 
 on:
   pull_request:
