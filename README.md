@@ -50,5 +50,5 @@ So for instance, a pull_image helper could look something like this:
 
 ## Reference
 
-- Documentation for Serverspec can be found at http://serverspec.org/resource_types.html
-- Documentation for the docker-api gem can be found at https://github.com/swipely/docker-api
+- Documentation for Serverspec can be found at <http://serverspec.org/resource_types.html>
+- Documentation for the docker-api gem can be found at <https://github.com/swipely/docker-api>
