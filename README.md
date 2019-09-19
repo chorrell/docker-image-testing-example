@@ -1,5 +1,7 @@
 # docker-image-testing-example
 
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=chorrell/docker-image-testing-example)](https://dependabot.com)
+
 This is an exmaple of using Serverspec to test Dockerfiles
 
 ## Setup
