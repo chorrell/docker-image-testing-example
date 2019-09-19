@@ -8,7 +8,7 @@ This is an exmaple of using Serverspec to test Dockerfiles
 
 Install Serverspec and the require gems with bundler:
 
-```
+```shell
 bundle install
 ```
 
@@ -16,7 +16,7 @@ This exmaple assumes you have Docker installed, running and configured.
 
 ## Usage (running the tests)
 
-```
+```shell
 cd test
 rake
 ```
@@ -34,23 +34,21 @@ You could also use the docker-api gem to pull exisiting images from the Docker h
 
 So for instance, a pull_image helper could look something like this:
 
-```
+```ruby
   def pull_image(image)
-    
+
     puts "Pulling image #{image}..."
     @image = Docker::Image.create('fromImage' => imge)
-    
+
     set :os, :family => 'debian'
     set :backend, :docker
     set :docker_image, @image.id
-    
+
     puts "Running tests..."
   end
-
 ```
 
 ## Reference
 
 - Documentation for Serverspec can be found at http://serverspec.org/resource_types.html
 - Documentation for the docker-api gem can be found at https://github.com/swipely/docker-api
-
