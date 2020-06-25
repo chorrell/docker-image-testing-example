@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set up Ruby 2.x
-      uses: actions/setup-ruby@v1
+      uses: actions/setup-ruby@v1.1.1
       with:
         ruby-version: 2.x
     - name: Install Serverspec
