@@ -20,4 +20,4 @@ jobs:
     - name: Run test
       run: |
         cd test
-        rake
+        sudo rake
