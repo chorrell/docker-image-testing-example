@@ -1,4 +1,4 @@
-FROM buildpack-deps:stretch
+FROM buildpack-deps:buster
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
