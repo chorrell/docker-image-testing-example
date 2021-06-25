@@ -5,19 +5,14 @@ on: push
 jobs:
   build:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2.3.4
     - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1.1.3
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
-    - name: Install Serverspec
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
+        bundler-cache: true
     - name: Run test
-      run: |
-        cd test
-        rake
+      run: bundle exec rake
