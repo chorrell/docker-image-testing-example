@@ -13,6 +13,6 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
-        bundler-cache: true 
+        bundler-cache: true
     - name: Run test
       run: bundle exec rake
