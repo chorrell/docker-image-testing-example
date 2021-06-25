@@ -1,5 +1,5 @@
 module Helpers
-  def create_image(version, variant="none")
+  def create_image(version)
     
     puts "Building image..."
     @image = Docker::Image.build_from_dir("#{version}/")
