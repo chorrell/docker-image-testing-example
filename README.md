@@ -15,8 +15,7 @@ This exmaple assumes you have Docker installed, running and configured.
 ## Usage (running the tests)
 
 ```shell
-cd test
-rake
+bundle exec rake
 ```
 
 The above will run Serverspec and using the docker-api gem it will
