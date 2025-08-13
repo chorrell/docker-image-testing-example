@@ -4,9 +4,16 @@ ENV NPM_CONFIG_LOGLEVEL=info
 ENV NODE_VERSION=20.19.4
 
 # gpg keys listed at https://github.com/nodejs/node
-RUN set -ex \
-  && apt-get update \
-  && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils --no-install-recommends \
+RUN ARCH= OPENSSL_ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+    && case "${dpkgArch##*-}" in \
+      amd64) ARCH='x64' OPENSSL_ARCH='linux-x86_64';; \
+      arm64) ARCH='arm64' OPENSSL_ARCH='linux-aarch64';; \
+      *) echo "unsupported architecture"; exit 1 ;; \
+    esac \
+    && set -ex \
+    # libatomic1 for arm build
+    && apt-get update \
+    && apt-get install -y ca-certificates curl dirmngr gnupg libatomic1 xz-utils --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
   # use pre-existing gpg directory, see https://github.com/nodejs/docker-node/pull/1895#issuecomment-1550389150
   && export GNUPGHOME="$(mktemp -d)" \
@@ -23,14 +30,14 @@ RUN set -ex \
     { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" && gpg --batch --fingerprint "$key"; } || \
     { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" && gpg --batch --fingerprint "$key"; } ; \
   done \
-  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
+  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
   && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
   && gpgconf --kill all \
   && rm -rf "$GNUPGHOME" \
-  && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+  && grep " node-v$NODE_VERSION-linux-$ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+  && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 \
+  && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && node --version \
   && npm --version
 
