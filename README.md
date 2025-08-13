@@ -20,7 +20,7 @@ bundle exec rake
 
 The above will run Serverspec and using the docker-api gem it will
 
-- Build a Docker image from the Docker file found in the top level directories (22)
+- Build a Docker image from the Docker file found in the top level directories (20 and 22)
 - Create a container of that image,
 - Run the tests found in `spec/` on the container
 - Delete the images and containers if the test was successful
