@@ -9,10 +9,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
-    - name: Set up Ruby 2.6
+    - name: Set up Ruby 3.4
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6
+        ruby-version: 3.4
         bundler-cache: true
     - name: Run test
       run: bundle exec rake
