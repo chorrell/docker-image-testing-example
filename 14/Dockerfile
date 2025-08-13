@@ -1,7 +1,15 @@
-FROM buildpack-deps:buster
+FROM debian:trixie-slim
+
+ENV NPM_CONFIG_LOGLEVEL=info
+ENV NODE_VERSION=14.17.1
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
+  && apt-get update \
+  && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  # use pre-existing gpg directory, see https://github.com/nodejs/docker-node/pull/1895#issuecomment-1550389150
+  && export GNUPGHOME="$(mktemp -d)" \
   && for key in \
     4ED778F539E3634C779C87C6D7062848A1AB005C \
     94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
@@ -17,16 +25,16 @@ RUN set -ex \
   ; do \
     { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" && gpg --batch --fingerprint "$key"; } || \
     { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" && gpg --batch --fingerprint "$key"; } ; \
-  done
-
-ENV NPM_CONFIG_LOGLEVEL=info
-ENV NODE_VERSION=14.17.1
-
-RUN curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
+  done \
+  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+  && gpgconf --kill all \
+  && rm -rf "$GNUPGHOME" \
   && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
+  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+  && node --version \
+  && npm --version
 
 CMD [ "node" ]
