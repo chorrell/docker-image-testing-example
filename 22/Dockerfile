@@ -4,34 +4,41 @@ ENV NPM_CONFIG_LOGLEVEL=info
 ENV NODE_VERSION=22.18.0
 
 # gpg keys listed at https://github.com/nodejs/node
-RUN set -ex \
-  && apt-get update \
-  && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* \
-  # use pre-existing gpg directory, see https://github.com/nodejs/docker-node/pull/1895#issuecomment-1550389150
-  && export GNUPGHOME="$(mktemp -d)" \
-  && for key in \
-      5BE8A3F6C8A5C01D106C0AD820B1A390B168D356 \
-      DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7 \
-      CC68F5A3106FF448322E48ED27F5E38D5B0A215F \
-      8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
-      890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4 \
-      C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C \
-      108F52B48DB57BB0CC439B2997B01419BD92F80A \
-      A363A499291CBBC940DD62E41F10027AF002F8B0 \
-  ; do \
-    { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" && gpg --batch --fingerprint "$key"; } || \
-    { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" && gpg --batch --fingerprint "$key"; } ; \
-  done \
-  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
-  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-  && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
-  && gpgconf --kill all \
-  && rm -rf "$GNUPGHOME" \
-  && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-  && node --version \
-  && npm --version
+RUN ARCH= OPENSSL_ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+    && case "${dpkgArch##*-}" in \
+      amd64) ARCH='x64' OPENSSL_ARCH='linux-x86_64';; \
+      arm64) ARCH='arm64' OPENSSL_ARCH='linux-aarch64';; \
+      *) echo "unsupported architecture"; exit 1 ;; \
+    esac \
+    && set -ex \
+    # libatomic1 for arm build
+    && apt-get update \
+    && apt-get install -y ca-certificates curl dirmngr gnupg libatomic1 xz-utils --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    # use pre-existing gpg directory, see https://github.com/nodejs/docker-node/pull/1895#issuecomment-1550389150
+    && export GNUPGHOME="$(mktemp -d)" \
+    && for key in \
+        5BE8A3F6C8A5C01D106C0AD820B1A390B168D356 \
+        DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7 \
+        CC68F5A3106FF448322E48ED27F5E38D5B0A215F \
+        8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
+        890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4 \
+        C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C \
+        108F52B48DB57BB0CC439B2997B01419BD92F80A \
+        A363A499291CBBC940DD62E41F10027AF002F8B0 \
+    ; do \
+      { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" && gpg --batch --fingerprint "$key"; } || \
+      { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" && gpg --batch --fingerprint "$key"; } ; \
+    done \
+    && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
+    && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+    && gpgconf --kill all \
+    && rm -rf "$GNUPGHOME" \
+    && grep " node-v$NODE_VERSION-linux-$ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+    && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 \
+    && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+    && node --version \
+    && npm --version
 
 CMD [ "node" ]
