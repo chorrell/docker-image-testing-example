@@ -1,7 +1,7 @@
 FROM debian:trixie-slim
 
 ENV NPM_CONFIG_LOGLEVEL=info
-ENV NODE_VERSION=20.19.4
+ENV NODE_VERSION=20.19.5
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN ARCH= OPENSSL_ARCH= && dpkgArch="$(dpkg --print-architecture)" \
