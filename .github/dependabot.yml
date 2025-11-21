@@ -4,13 +4,21 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:30"
+      timezone: "America/Toronto"
 
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
+      time: "09:55"
+      timezone: "America/Toronto"
       
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:45"
+      timezone: "America/Toronto"
