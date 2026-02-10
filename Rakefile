@@ -1,6 +1,9 @@
 require 'rake'
 require 'rspec/core/rake_task'
 
+# Enable Docker BuildKit for faster builds with better caching
+ENV['DOCKER_BUILDKIT'] = '1'
+
 task :spec    => 'spec:all'
 task :default => :spec
 
