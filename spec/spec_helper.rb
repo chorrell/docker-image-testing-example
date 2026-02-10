@@ -15,9 +15,21 @@ module Helpers
   
   def delete_image
     puts "Deleting image..."
-    # Stop all containers so we can remove the image
-    for container in Docker::Container.all(:all => true)
-      container.stop
+    # Stop and remove only containers created from this image
+    Docker::Container.all(:all => true).each do |container|
+      container_image = container.info['Image']
+      container_image_id = container.info['ImageID']
+      
+      # Match image IDs - container IDs may have sha256: prefix and be full hashes
+      # while @image.id is the short ID
+      if container_image&.include?(@image.id) || container_image_id&.include?(@image.id)
+        begin
+          container.stop unless container.info['State'] == 'exited'
+          container.delete(:force => true)
+        rescue Docker::Error::NotModifiedError
+          # Container already stopped, ignore
+        end
+      end
     end
     
     @image.remove(:force => true)
