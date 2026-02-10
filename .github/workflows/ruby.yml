@@ -15,4 +15,6 @@ jobs:
         ruby-version: 3.4
         bundler-cache: true
     - name: Run test
+      env:
+        DOCKER_BUILDKIT: 1
       run: bundle exec rake
