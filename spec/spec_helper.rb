@@ -1,10 +1,7 @@
 module Helpers
   def create_image(version)
-    
     puts "Building image..."
     @image = Docker::Image.build_from_dir("#{version}/")
-    @image.tag("repo" => "node", "tag" => "#{version}", "force" => true)
-    
 
     set :os, :family => 'debian'
     set :backend, :docker
