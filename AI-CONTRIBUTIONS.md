@@ -6,49 +6,59 @@ This document tracks improvements made to this project with the assistance of AI
 
 ## Overview
 
-Between February 2026, this project underwent a comprehensive modernization effort with AI assistance. The collaboration resulted in 11 merged pull requests that transformed the codebase from having critical bugs and outdated dependencies to being a modern, efficient, and future-proof testing infrastructure.
+Between February 2026, this project underwent a comprehensive modernization
+effort with AI assistance. The collaboration resulted in 11 merged pull requests
+that transformed the codebase from having critical bugs and outdated dependencies
+to being a modern, efficient, and future-proof testing infrastructure.
 
 ## Improvements Summary
 
 ### 🔒 Critical Bug Fixes
 
-**PR #56: Fixed Unsafe Container Cleanup**
+#### PR #56: Fixed Unsafe Container Cleanup
+
 - **Issue**: `delete_image` was stopping ALL Docker containers on the system, including unrelated ones
 - **Fix**: Updated to only stop containers created from the test image
 - **Impact**: Prevented dangerous system-wide container disruptions
 
 ### ⚡ Performance Enhancements
 
-**PR #58: Parallel Test Execution**
+#### PR #58: Parallel Test Execution
+
 - **Change**: Implemented Rake multitask for parallel test execution
 - **Improvement**: ~47% faster test runs (35s → 18s)
 - **Method**: Tests run in separate subprocesses with isolated environments
 
-**PR #62: Docker BuildKit**
+#### PR #62: Docker BuildKit
+
 - **Change**: Enabled Docker BuildKit for image builds
 - **Benefits**: Faster builds, better caching, improved layer management
 
 ### 📦 Dependency Updates
 
-**PR #57: Updated Gem Dependencies**
+#### PR #57: Updated Gem Dependencies
+
 - Updated to latest stable versions with version pinning
 - Gems: docker-api ~> 2.4, rake ~> 13.0, rspec ~> 3.13, serverspec ~> 2.43
 - Includes security patches and bug fixes
 
-**PR #63: Logger Gem for Ruby 4.0**
+#### PR #63: Logger Gem for Ruby 4.0
+
 - Added explicit `logger` gem dependency
 - Fixes Ruby 4.0 deprecation warning
 - Ensures forward compatibility
 
 ### 🧪 Testing Improvements
 
-**PR #64: Ruby Version Matrix**
+#### PR #64: Ruby Version Matrix
+
 - Implemented GitHub Actions matrix testing
 - Tests on Ruby 3.4 (maintenance) and Ruby 4.0 (latest)
 - Ensures compatibility across Ruby versions
 - fail-fast: false allows all versions to complete
 
-**PR #65: Node.js LTS Updates**
+#### PR #65: Node.js LTS Updates
+
 - Updated from Node.js 20 & 22 to 22 & 24
 - Node.js 22.22.0 (Maintenance LTS)
 - Node.js 24.13.0 (Active LTS "Krypton")
@@ -56,19 +66,22 @@ Between February 2026, this project underwent a comprehensive modernization effo
 
 ### 🛡️ Reliability & Error Handling
 
-**PR #61: Comprehensive Error Handling**
+#### PR #61: Comprehensive Error Handling
+
 - Added try/catch blocks in `create_image` and `delete_image`
 - Guards against nil @image references
 - Clear error messages for debugging
 - Informative status messages
 
-**PR #60: Removed Redundant Tagging**
+#### PR #60: Removed Redundant Tagging
+
 - Removed unused `@image.tag()` call
 - Simplified image lifecycle management
 
 ### 🔧 Developer Experience
 
-**PR #59: Bundler Config & .gitignore**
+#### PR #59: Bundler Config & .gitignore
+
 - Added `.bundle/config` for local gem installation
 - Created `.gitignore` to exclude vendor/bundle, .DS_Store, etc.
 - Enables `bundle install` without sudo
@@ -76,13 +89,15 @@ Between February 2026, this project underwent a comprehensive modernization effo
 
 ### 📚 Documentation
 
-**PR #66: Updated README**
+#### PR #66: Updated README
+
 - Updated directory references from (20 and 22) to (22 and 24)
 - Keeps documentation in sync with code changes
 
 ## Metrics
 
 ### Before AI Assistance
+
 - Critical container cleanup bug (system-wide impact)
 - Sequential test execution (~35 seconds)
 - Outdated dependencies
@@ -93,6 +108,7 @@ Between February 2026, this project underwent a comprehensive modernization effo
 - Sudo required for gem installation
 
 ### After AI Assistance
+
 - Safe, isolated container cleanup
 - Parallel test execution (~18 seconds, 47% faster)
 - Latest stable dependencies with version pinning
@@ -105,14 +121,17 @@ Between February 2026, this project underwent a comprehensive modernization effo
 ## Technology Stack Updates
 
 ### Ruby Versions Tested
+
 - Ruby 3.4.x (Stable maintenance)
 - Ruby 4.0.x (Latest stable)
 
 ### Node.js Versions Tested
+
 - Node.js 22.22.0 (Maintenance LTS "Jod")
 - Node.js 24.13.0 (Active LTS "Krypton")
 
 ### Gem Versions
+
 - docker-api ~> 2.4
 - rake ~> 13.0
 - rspec ~> 3.13
@@ -122,18 +141,21 @@ Between February 2026, this project underwent a comprehensive modernization effo
 ## AI Agent Methodology
 
 ### Analysis Phase
+
 1. Comprehensive code review of existing implementation
 2. Identification of bugs, inefficiencies, and technical debt
 3. Prioritization of issues by severity and impact
 4. Research of current best practices and latest versions
 
 ### Implementation Phase
+
 1. Incremental improvements via focused pull requests
 2. Testing at each step before proceeding
 3. CI/CD validation for all changes
 4. Clear documentation in commit messages and PR descriptions
 
 ### Verification Phase
+
 1. Local testing before each commit
 2. GitHub Actions CI validation
 3. Multi-version compatibility testing
@@ -142,6 +164,7 @@ Between February 2026, this project underwent a comprehensive modernization effo
 ## Pull Request Links
 
 All improvements are documented in individual pull requests:
+
 - [PR #56](../../pull/56) - Fixed unsafe container cleanup
 - [PR #57](../../pull/57) - Updated gem dependencies
 - [PR #58](../../pull/58) - Parallel test execution
@@ -157,24 +180,28 @@ All improvements are documented in individual pull requests:
 ## Best Practices Demonstrated
 
 ### Code Quality
+
 - Comprehensive error handling
 - Resource cleanup in all code paths
 - Clear, informative logging
 - No technical debt
 
 ### Testing
+
 - Multi-version testing (Ruby 3.4 & 4.0)
 - Multi-platform testing (Node.js 22 & 24)
 - Parallel execution for efficiency
 - CI/CD automation
 
 ### Dependencies
+
 - Version pinning for reproducibility
 - Regular updates for security
 - Explicit dependencies (no implicit defaults)
 - Forward compatibility considerations
 
 ### Documentation
+
 - Clear commit messages
 - Detailed PR descriptions
 - Updated README
@@ -191,6 +218,7 @@ All improvements are documented in individual pull requests:
 ## Future Considerations
 
 While the project is now in excellent shape, potential future improvements could include:
+
 - Additional Node.js LTS version testing (e.g., v26 when released)
 - Ruby 4.1 when it enters LTS
 - Container image caching between test runs
@@ -198,7 +226,10 @@ While the project is now in excellent shape, potential future improvements could
 
 ## Acknowledgments
 
-This project benefited from AI assistance using Factory's Droid agent, which helped identify issues, research solutions, implement fixes, and ensure comprehensive testing. All changes were reviewed and approved by the project maintainer.
+This project benefited from AI assistance using Factory's Droid agent, which
+helped identify issues, research solutions, implement fixes, and ensure
+comprehensive testing. All changes were reviewed and approved by the project
+maintainer.
 
 ---
 

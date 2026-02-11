@@ -4,9 +4,13 @@ Instructions for AI coding agents working on this project.
 
 ## Project Overview
 
-This is a Serverspec-based testing framework for validating Docker images. The project tests Node.js Docker images built from custom Dockerfiles by creating containers, running Serverspec tests against them, and cleaning up resources.
+This is a Serverspec-based testing framework for validating Docker images.
+The project tests Node.js Docker images built from custom Dockerfiles by
+creating containers, running Serverspec tests against them, and cleaning up
+resources.
 
 **Tech Stack:**
+
 - Ruby 3.4+ and Ruby 4.0+
 - Serverspec 2.43+
 - Docker API gem 2.4+
@@ -14,6 +18,7 @@ This is a Serverspec-based testing framework for validating Docker images. The p
 - Docker BuildKit
 
 **Current Node.js versions tested:**
+
 - Node.js 22.22.0 (Maintenance LTS)
 - Node.js 24.13.0 (Active LTS)
 
@@ -44,7 +49,7 @@ bundle exec rake --trace
 
 ## Project Structure
 
-```
+```text
 .
 ├── 22/                          # Node.js 22 Dockerfile
 ├── 24/                          # Node.js 24 Dockerfile
@@ -88,6 +93,30 @@ bundle update
 
 # Always remove BUNDLED WITH section from Gemfile.lock for CI compatibility
 ```
+
+## Documentation Standards
+
+### Markdown Linting
+
+All markdown files must pass markdownlint validation before committing.
+
+```bash
+# Check all markdown files
+npx markdownlint-cli *.md
+
+# Auto-fix issues where possible
+npx markdownlint-cli --fix *.md
+```
+
+**Configuration**: See `.markdownlint.json` for project rules.
+
+**Key Rules**:
+
+- Line length: 120 characters max (code blocks excluded)
+- Blank lines around headings and lists
+- Language specified for fenced code blocks
+- No bare URLs (use markdown links)
+- Use proper headings (not bold text as headings)
 
 ## Testing Instructions
 
@@ -155,6 +184,7 @@ describe file("/usr/local/bin/node")
 ### GitHub Actions Matrix
 
 Tests run on:
+
 - Ruby 3.4 (current stable)
 - Ruby 4.0 (latest stable)
 
@@ -171,6 +201,7 @@ Both versions must pass before merge.
 
 - Test all changes locally before committing
 - Run full test suite: `bundle exec rake`
+- Lint markdown files: `npx markdownlint-cli *.md`
 - Keep Node.js versions on LTS releases
 - Update README.md when changing versions
 - Use version pinning in Gemfile (`~>` operator)
@@ -193,7 +224,7 @@ Both versions must pass before merge.
 
 ### Commit Message Format
 
-```
+```text
 <type>: <short summary>
 
 <detailed description>
@@ -214,7 +245,7 @@ Co-authored-by: <AI agent or human collaborator>
 
 ### Example
 
-```
+```text
 feat: Add Node.js 26 LTS support
 
 - Create 26/Dockerfile with NODE_VERSION=26.x.x
@@ -258,20 +289,24 @@ Tests pass on Ruby 3.4 and 4.0.
 
 ### Common Issues
 
-**Tests fail with "container not found"**
+#### Tests fail with "container not found"
+
 - Check that Docker daemon is running
 - Verify container cleanup in after(:all) block
 
-**Image build fails**
+#### Image build fails
+
 - Verify Node.js version exists on nodejs.org
 - Check GPG key servers are accessible
 - Review Docker BuildKit logs
 
-**Bundler version conflicts**
+#### Bundler version conflicts
+
 - Remove BUNDLED WITH section from Gemfile.lock
 - Let CI use its native Bundler version
 
-**Performance Issues**
+#### Performance Issues
+
 - Ensure Docker BuildKit is enabled
 - Verify parallel execution (multitask) is working
 - Check if Docker daemon has resource constraints
@@ -297,14 +332,15 @@ bundle exec rspec spec/24/Dockerfile_spec.rb --format documentation
 
 ## Resources
 
-- **Serverspec Documentation**: http://serverspec.org/resource_types.html
-- **Docker API Gem**: https://github.com/swipely/docker-api
-- **Node.js Releases**: https://nodejs.org/en/about/previous-releases
-- **Ruby Releases**: https://www.ruby-lang.org/en/downloads/releases/
+- **Serverspec Documentation**: <http://serverspec.org/resource_types.html>
+- **Docker API Gem**: <https://github.com/swipely/docker-api>
+- **Node.js Releases**: <https://nodejs.org/en/about/previous-releases>
+- **Ruby Releases**: <https://www.ruby-lang.org/en/downloads/releases/>
 
 ## Questions?
 
 When working on this project:
+
 1. Check existing patterns in similar files
 2. Run tests locally before committing
 3. Review CI output for multi-version compatibility
