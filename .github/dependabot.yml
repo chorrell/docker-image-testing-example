@@ -7,6 +7,11 @@ updates:
       day: "monday"
       time: "09:30"
       timezone: "America/Toronto"
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
 
   - package-ecosystem: "bundler"
     directory: "/"
@@ -14,7 +19,12 @@ updates:
       interval: "daily"
       time: "09:55"
       timezone: "America/Toronto"
-      
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "bundler"
+      include: "scope"
+
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -22,3 +32,9 @@ updates:
       day: "monday"
       time: "09:45"
       timezone: "America/Toronto"
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+
