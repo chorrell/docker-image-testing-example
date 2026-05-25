@@ -12,6 +12,8 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: "bundler"
     directory: "/"
@@ -24,6 +26,8 @@ updates:
     commit-message:
       prefix: "bundler"
       include: "scope"
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -37,4 +41,6 @@ updates:
     commit-message:
       prefix: "docker"
       include: "scope"
+    cooldown:
+      default-days: 7
 
