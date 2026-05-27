@@ -4,24 +4,25 @@ require 'rspec/core/rake_task'
 # Enable Docker BuildKit for faster builds with better caching
 ENV['DOCKER_BUILDKIT'] = '1'
 
-task :spec    => 'spec:all'
-task :default => :spec
+task spec: 'spec:all'
+task default: :spec
 
 namespace :spec do
   targets = []
   Dir.glob('./spec/*').each do |dir|
     next unless File.directory?(dir)
+
     target = File.basename(dir)
-    target = "_#{target}" if target == "default"
+    target = "_#{target}" if target == 'default'
     targets << target
   end
 
   # Use multitask for parallel execution
-  multitask :all     => targets
-  task :default => :all
+  multitask all: targets
+  task default: :all
 
   targets.each do |target|
-    original_target = target == "_default" ? target[1..-1] : target
+    original_target = target == '_default' ? target[1..] : target
     desc "Run serverspec tests to #{original_target}"
     task target.to_sym do
       # Run RSpec in a separate process with environment variable set
