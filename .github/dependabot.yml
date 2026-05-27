@@ -19,7 +19,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "09:55"
+      time: "09:45"
       timezone: "America/Toronto"
     pull-request-branch-name:
       separator: "/"
@@ -34,7 +34,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "09:45"
+      time: "09:55"
       timezone: "America/Toronto"
     pull-request-branch-name:
       separator: "/"
@@ -44,3 +44,17 @@ updates:
     cooldown:
       default-days: 7
 
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+      timezone: "America/Toronto"
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    cooldown:
+      default-days: 7
