@@ -20,11 +20,29 @@ jobs:
       with:
         persist-credentials: false
     - name: Set up Ruby ${{ matrix.ruby-version }}
-      uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1.310.0
+      uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1.310.0 # zizmor: ignore[cache-poisoning]
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+      with:
+        driver-opts: network=host
+    - name: Build Node.js 22 image
+      uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+      with:
+        context: ./22
+        load: true
+        tags: node-test:22
+        cache-from: type=gha,scope=node22
+        cache-to: type=gha,mode=max,scope=node22
+    - name: Build Node.js 24 image
+      uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+      with:
+        context: ./24
+        load: true
+        tags: node-test:24
+        cache-from: type=gha,scope=node24
+        cache-to: type=gha,mode=max,scope=node24
     - name: Run tests
-      env:
-        DOCKER_BUILDKIT: 1
       run: bundle exec rake

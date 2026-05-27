@@ -3,6 +3,10 @@ module Helpers
     puts 'Building image...'
 
     begin
+      tag = "node-test:#{version}"
+      @image = Docker::Image.get(tag)
+      puts "Using pre-built image #{tag}..."
+    rescue Docker::Error::NotFoundError
       @image = Docker::Image.build_from_dir("#{version}/")
     rescue Docker::Error::DockerError => e
       puts "Failed to build Docker image: #{e.message}"
