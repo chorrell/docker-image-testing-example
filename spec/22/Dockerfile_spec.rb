@@ -7,7 +7,7 @@ tag = ENV['TARGET_HOST']
 
 describe "#{tag}" do
   include Helpers
-  
+
   before(:all) do
     create_image(tag)
   end
@@ -18,6 +18,6 @@ describe "#{tag}" do
 
   after(:all) do
     delete_image
-  end  
+  end
 
 end
