@@ -52,6 +52,3 @@ DEPENDENCIES
   rake (~> 13.4)
   rspec (~> 3.13)
   serverspec (~> 2.43)
-
-BUNDLED WITH
-   2.1.4
