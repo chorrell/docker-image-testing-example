@@ -349,22 +349,18 @@ bundle exec rake --trace
 bundle exec rspec spec/24/Dockerfile_spec.rb --format documentation
 ```
 
+## Future Improvements
+
+Potential areas for future work:
+
+- Add Node.js v26 when it enters LTS
+- Add Ruby 4.1 to the CI matrix when it releases
+- Container image caching between test runs for faster CI
+- Performance benchmarking automation
+
 ## Resources
 
 - **Serverspec Documentation**: <http://serverspec.org/resource_types.html>
 - **Docker API Gem**: <https://github.com/swipely/docker-api>
 - **Node.js Releases**: <https://nodejs.org/en/about/previous-releases>
 - **Ruby Releases**: <https://www.ruby-lang.org/en/downloads/releases/>
-
-## Questions?
-
-When working on this project:
-
-1. Check existing patterns in similar files
-2. Run tests locally before committing
-3. Review CI output for multi-version compatibility
-4. Keep changes focused and well-tested
-
----
-
-**Note**: For historical information about AI contributions to this project, see [AI-CONTRIBUTIONS.md](./AI-CONTRIBUTIONS.md).
