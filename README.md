@@ -4,13 +4,40 @@ This is an example of using Serverspec to test Dockerfiles
 
 ## Setup
 
-Install Serverspec and the require gems with bundler:
+This example assumes you have Docker installed, running and configured.
+
+### Ruby
+
+This project uses [rbenv](https://github.com/rbenv/rbenv) to manage Ruby versions.
+Install it and the required Ruby version:
+
+```shell
+brew install rbenv ruby-build
+rbenv install   # installs the version from .ruby-version
+```
+
+Add rbenv to your shell (add to `~/.zshrc` or `~/.bashrc`):
+
+```shell
+eval "$(rbenv init - zsh)"
+```
+
+### Dependencies
+
+Install gems with bundler:
 
 ```shell
 bundle install
 ```
 
-This example assumes you have Docker installed, running and configured.
+### Pre-commit Hooks
+
+Install [pre-commit](https://pre-commit.com/) and set up the hooks:
+
+```shell
+brew install pre-commit
+pre-commit install
+```
 
 ## Usage (running the tests)
 
