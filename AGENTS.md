@@ -25,8 +25,17 @@ resources.
 ## Setup Commands
 
 ```bash
-# Install dependencies locally (no sudo required)
+# Install rbenv (macOS) and the project Ruby version
+brew install rbenv ruby-build
+rbenv install   # reads .ruby-version (currently 3.4.9)
+eval "$(rbenv init - zsh)"  # add to ~/.zshrc for persistence
+
+# Install gems (no sudo required)
 bundle install
+
+# Install pre-commit hooks
+brew install pre-commit
+pre-commit install
 
 # Docker BuildKit is enabled by default in Rakefile
 # Verify Docker is running
@@ -61,6 +70,9 @@ bundle exec rake --trace
 │   └── npm_tests.rb            # Shared npm tests
 ├── Rakefile                     # Test runner with parallel execution
 ├── Gemfile                      # Ruby dependencies
+├── .ruby-version                # rbenv Ruby version pin (3.4.9)
+├── .rubocop.yml                 # Rubocop configuration
+├── .pre-commit-config.yaml      # Pre-commit hook definitions
 └── .github/workflows/ruby.yml   # CI with Ruby 3.4 & 4.0 matrix
 ```
 
@@ -96,19 +108,24 @@ bundle update
 
 ## Documentation Standards
 
-### Markdown Linting
+### Pre-commit Hooks
 
-All markdown files must pass markdownlint validation before committing.
+All commits must pass pre-commit hooks. The hooks run automatically on `git commit`.
+To run them manually:
 
 ```bash
-# Check all markdown files
-npx markdownlint-cli *.md
+# Run all hooks against all files
+pre-commit run --all-files
 
-# Auto-fix issues where possible
-npx markdownlint-cli --fix *.md
+# Run a specific hook
+pre-commit run rubocop --all-files
+pre-commit run markdownlint-cli2-docker --all-files
 ```
 
-**Configuration**: See `.markdownlint.json` for project rules.
+**Active hooks**: actionlint, gitleaks, hadolint, markdownlint-cli2, rubocop, zizmor,
+and standard file hygiene checks (trailing whitespace, end-of-file, YAML, merge conflicts).
+
+**Markdown configuration**: See `.markdownlint.json` for project rules.
 
 **Key Rules**:
 
@@ -156,20 +173,22 @@ end
 
 - Use 2 spaces for indentation
 - Follow existing patterns in spec files
-- Use double quotes for strings
+- Use single quotes for strings (rubocop enforces this)
 - Keep helper methods in `spec_helper.rb`
+- All Ruby files must pass rubocop — run `pre-commit run rubocop --all-files` to check
+- Configuration is in `.rubocop.yml`; Metrics cops are excluded for `spec/`
 
 ### Serverspec Patterns
 
 ```ruby
 # Use shared test methods
-test_node("24.13.0")  # Preferred
+test_node('24.13.0')  # Preferred
 test_npm              # Preferred
 
 # Resource types commonly used
-describe command("node --version")
-describe package("curl")
-describe file("/usr/local/bin/node")
+describe command('node --version')
+describe package('curl')
+describe file('/usr/local/bin/node')
 ```
 
 ### Dockerfile Conventions
@@ -201,7 +220,7 @@ Both versions must pass before merge.
 
 - Test all changes locally before committing
 - Run full test suite: `bundle exec rake`
-- Lint markdown files: `npx markdownlint-cli *.md`
+- Run all pre-commit hooks before pushing: `pre-commit run --all-files`
 - Keep Node.js versions on LTS releases
 - Update README.md when changing versions
 - Use version pinning in Gemfile (`~>` operator)
@@ -330,22 +349,18 @@ bundle exec rake --trace
 bundle exec rspec spec/24/Dockerfile_spec.rb --format documentation
 ```
 
+## Future Improvements
+
+Potential areas for future work:
+
+- Add Node.js v26 when it enters LTS
+- Add Ruby 4.1 to the CI matrix when it releases
+- Container image caching between test runs for faster CI
+- Performance benchmarking automation
+
 ## Resources
 
 - **Serverspec Documentation**: <http://serverspec.org/resource_types.html>
 - **Docker API Gem**: <https://github.com/swipely/docker-api>
 - **Node.js Releases**: <https://nodejs.org/en/about/previous-releases>
 - **Ruby Releases**: <https://www.ruby-lang.org/en/downloads/releases/>
-
-## Questions?
-
-When working on this project:
-
-1. Check existing patterns in similar files
-2. Run tests locally before committing
-3. Review CI output for multi-version compatibility
-4. Keep changes focused and well-tested
-
----
-
-**Note**: For historical information about AI contributions to this project, see [AI-CONTRIBUTIONS.md](./AI-CONTRIBUTIONS.md).
