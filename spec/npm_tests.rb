@@ -16,4 +16,4 @@ def test_npm
   describe command("echo \'{\"foo\":\"bar\"}\' | json foo") do
     its(:stdout) { should match /bar/ }
   end
-end 
+end
