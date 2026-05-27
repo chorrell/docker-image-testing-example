@@ -21,6 +21,15 @@ module Helpers
 
     puts "Deleting image..."
 
+    # Remove specinfra's Docker backend finalizer before we clean up containers.
+    # Without this, the finalizer fires at process exit and tries to stop/delete
+    # containers we've already removed here, producing "Exception in finalizer" warnings.
+    begin
+      ObjectSpace.undefine_finalizer(Specinfra.backend)
+    rescue => e
+      puts "Warning: Could not undefine specinfra finalizer: #{e.message}"
+    end
+
     # Stop and remove only containers created from this image
     begin
       Docker::Container.all(:all => true).each do |container|
