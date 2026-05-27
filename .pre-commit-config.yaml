@@ -13,6 +13,7 @@ repos:
     rev: v2.14.0
     hooks:
       - id: hadolint-docker
+        args: ["--failure-threshold", "error"]
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.22.1
