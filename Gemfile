@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 gem 'docker-api', '~> 2.4'
 gem 'rake', '~> 13.4'

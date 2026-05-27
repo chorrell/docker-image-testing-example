@@ -13,7 +13,7 @@ def test_npm
     its(:exit_status) { should eq 0 }
   end
 
-  describe command("echo \'{\"foo\":\"bar\"}\' | json foo") do
-    its(:stdout) { should match /bar/ }
+  describe command("echo '{\"foo\":\"bar\"}' | json foo") do
+    its(:stdout) { should match(/bar/) }
   end
 end

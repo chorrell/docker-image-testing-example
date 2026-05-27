@@ -1,0 +1,30 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+# Dockerfile_spec.rb filenames are intentional — they mirror the Dockerfile being tested
+Naming/FileName:
+  Exclude:
+    - 'spec/**/*'
+
+# Not required for a test-only project
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Spec helpers contain necessarily complex cleanup logic
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'spec/**/*'
