@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:30"
       timezone: "America/Toronto"
     pull-request-branch-name:
@@ -32,8 +31,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:55"
       timezone: "America/Toronto"
     pull-request-branch-name:
@@ -47,8 +45,7 @@ updates:
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "10:00"
       timezone: "America/Toronto"
     pull-request-branch-name:
