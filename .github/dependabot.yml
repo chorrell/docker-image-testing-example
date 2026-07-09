@@ -6,6 +6,19 @@ updates:
       interval: "daily"
       time: "09:30"
       timezone: "America/Toronto"
+    groups:
+      github-official:
+        patterns:
+          - "actions/*"
+        update-types:
+          - "minor"
+          - "patch"
+      docker:
+        patterns:
+          - "docker/*"
+        update-types:
+          - "minor"
+          - "patch"
     pull-request-branch-name:
       separator: "/"
     commit-message:
