@@ -45,9 +45,7 @@ updates:
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "10:00"
-      timezone: "America/Toronto"
+      interval: "weekly"
     pull-request-branch-name:
       separator: "/"
     commit-message:
