@@ -10,13 +10,13 @@ repos:
       - id: gitleaks
 
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.14.0
+    rev: v2.15.1
     hooks:
       - id: hadolint-docker
         args: ["--failure-threshold", "error"]
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.1
+    rev: v0.23.2
     hooks:
       - id: markdownlint-cli2-docker
 
@@ -31,13 +31,13 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/rubocop/rubocop
-    rev: v1.88.2
+    rev: v1.90.0
     hooks:
       - id: rubocop
         language_version: 3.4.7
         args: ['--autocorrect', '--force-exclusion']
 
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.28.0
+    rev: v1.29.0
     hooks:
       - id: zizmor
