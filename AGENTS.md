@@ -122,8 +122,11 @@ pre-commit run rubocop --all-files
 pre-commit run markdownlint-cli2-docker --all-files
 ```
 
-**Active hooks**: actionlint, gitleaks, hadolint, markdownlint-cli2, rubocop, zizmor,
+**Active hooks**: gitleaks, hadolint, markdownlint-cli2, rubocop, zizmor,
 and standard file hygiene checks (trailing whitespace, end-of-file, YAML, merge conflicts).
+zizmor is the GitHub Actions workflow linter; actionlint isn't used because it rejects
+GitHub's `$/` self-repository `uses:` syntax
+([rhysd/actionlint#711](https://github.com/rhysd/actionlint/issues/711)).
 
 **Markdown configuration**: See `.markdownlint.json` for project rules.
 
