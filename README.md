@@ -32,11 +32,11 @@ bundle install
 
 ### Pre-commit Hooks
 
-Install [pre-commit](https://pre-commit.com/) and set up the hooks:
+Install [prek](https://github.com/j178/prek) and set up the hooks:
 
 ```shell
-brew install pre-commit
-pre-commit install
+brew install prek
+prek install
 ```
 
 ## Usage (running the tests)
