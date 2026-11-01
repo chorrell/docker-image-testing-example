@@ -34,8 +34,8 @@ eval "$(rbenv init - zsh)"  # add to ~/.zshrc for persistence
 bundle install
 
 # Install pre-commit hooks
-brew install pre-commit
-pre-commit install
+brew install prek
+prek install
 
 # Docker BuildKit is enabled by default in Rakefile
 # Verify Docker is running
@@ -115,11 +115,11 @@ To run them manually:
 
 ```bash
 # Run all hooks against all files
-pre-commit run --all-files
+prek run --all-files
 
 # Run a specific hook
-pre-commit run rubocop --all-files
-pre-commit run markdownlint-cli2-docker --all-files
+prek run rubocop --all-files
+prek run markdownlint-cli2-docker --all-files
 ```
 
 **Active hooks**: gitleaks, hadolint, markdownlint-cli2, rubocop, zizmor,
@@ -178,7 +178,7 @@ end
 - Follow existing patterns in spec files
 - Use single quotes for strings (rubocop enforces this)
 - Keep helper methods in `spec_helper.rb`
-- All Ruby files must pass rubocop — run `pre-commit run rubocop --all-files` to check
+- All Ruby files must pass rubocop — run `prek run rubocop --all-files` to check
 - Configuration is in `.rubocop.yml`; Metrics cops are excluded for `spec/`
 
 ### Serverspec Patterns
@@ -223,7 +223,7 @@ Both versions must pass before merge.
 
 - Test all changes locally before committing
 - Run full test suite: `bundle exec rake`
-- Run all pre-commit hooks before pushing: `pre-commit run --all-files`
+- Run all pre-commit hooks before pushing: `prek run --all-files`
 - Keep Node.js versions on LTS releases
 - Update README.md when changing versions
 - Use version pinning in Gemfile (`~>` operator)

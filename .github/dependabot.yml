@@ -1,18 +1,31 @@
 version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+
+# GitHub Actions and pre-commit hooks arrive as one monthly PR, which
+# dependabot-automerge.yml merges when every update is minor or patch.
+multi-ecosystem-groups:
+  tooling:
     schedule:
       interval: "monthly"
-    groups:
-      monthly-batch:
-        patterns:
-          - "*"
     pull-request-branch-name:
       separator: "/"
     commit-message:
-      prefix: "ci"
+      prefix: "chore"
       include: "scope"
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "tooling"
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "tooling"
     cooldown:
       default-days: 7
 
@@ -44,22 +57,6 @@ updates:
       separator: "/"
     commit-message:
       prefix: "docker"
-      include: "scope"
-    cooldown:
-      default-days: 7
-
-  - package-ecosystem: "pre-commit"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    groups:
-      monthly-batch:
-        patterns:
-          - "*"
-    pull-request-branch-name:
-      separator: "/"
-    commit-message:
-      prefix: "chore"
       include: "scope"
     cooldown:
       default-days: 7
